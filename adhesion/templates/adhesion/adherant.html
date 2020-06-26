@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}css_class='form-row'
+{% include 'nav.html' %}
+<main  class="pt-3">
+  <div class="main">
+    <section class="signup">
+      <!-- <img src="images/signup-bg.jpg" alt=""> -->
+      <div class="container" id="container">
+        <!-- Material form login -->
+        <br><br><br><br><br>
+        <div class="card">
+          <h5 class="card-header white-text text-center py-4" style="background-color: #ffffff !important; color: #000000 !important;">
+            <strong>Remplissez ce formulaire correctement pour débuter le processus d'adhésion</strong>
+          </h5>
+          <!--Card content-->
+          <div class="card-body px-lg-5 pt-0">
+            {% crispy form %}
+          </div>
+          
+        </div>
+        <!-- Material form login -->
+      </div>
+    </section>
+    
+  </div>
+</main>
+<br><br>

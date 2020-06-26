@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+{{ title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+    {% include "titrologie/liste.html" %}
+{% endblock  %}

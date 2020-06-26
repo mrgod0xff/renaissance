@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block head_title %}Rénaissance Portail web{% endblock head_title %}</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'renaissance/img/logo.jpeg' %}" />
+    <link href="{% static 'renaissance/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'renaissance/css/snowden.min.css' %}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <style type="text/css">
+        html,
+        body,
+        header,
+        .jarallax {
+            height: 600px;
+        }
+        
+        @media (max-width: 740px) {
+            html,
+            body,
+            header,
+            .jarallax {
+                height: 100%;
+            }
+        }
+        
+        @media (min-width: 800px) and (max-width: 850px) {
+            html,
+            body,
+            header,
+            .jarallax {
+                height: 100%;
+            }
+        }
+        .gallery {
+-webkit-column-count: 3;
+-moz-column-count: 3;
+column-count: 3;
+-webkit-column-width: 33%;
+-moz-column-width: 33%;
+column-width: 33%; }
+.gallery .pics {
+-webkit-transition: all 350ms ease;
+transition: all 350ms ease; }
+.gallery .animation {
+-webkit-transform: scale(1);
+-ms-transform: scale(1);
+transform: scale(1); }
+
+@media (max-width: 450px) {
+.gallery {
+-webkit-column-count: 1;
+-moz-column-count: 1;
+column-count: 1;
+-webkit-column-width: 100%;
+-moz-column-width: 100%;
+column-width: 100%;
+}
+}
+
+@media (max-width: 400px) {
+.btn.filter {
+padding-left: 1.1rem;
+padding-right: 1.1rem;
+}
+}
+    </style>
+</head>
+
+<body class="homepage-v1 hidden-sn animated">
+
+
+    <div class="">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="page-footer stylish-color text-center text-md-left  pt-4" style="background: #123549 !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-uppercase font-weight-bold">A Propos</h6>
+                    <hr>
+                    <p>Nous somme un mouvement politique transpartisan. De ce fait il est ouvert à toute personne, à toute organisation qui adhère à sa vision et ses valeurs sont donc le principal centre d’intérêt reste la Reconstruction de la Côte d’Ivoire
+                        et le bien-être de la population ivoirienne.</p>
+                </div>
+
+                <hr class="w-50 clearfix d-md-none" style="background:#fff">
+
+                <div class="col-md-3">
+                    <h6 class="text-uppercase font-weight-bold">Liens Utils</h6>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="{% url "adhesion:adherant" %}">
+                                <p>Devenez membre</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!">
+                                <p>Souscrire au bulletin d'information</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!">
+                                <p>Rénaissance sur les réseaux sociaux</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <hr class="w-50 clearfix d-md-none" style="background:#fff">
+
+                <div class="col-md-3">
+                    <h6 class="text-uppercase font-weight-bold">Contactez Nous</h6>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li>
+                            <p><i class="fa fa-home mr-3"></i>94550 Franklin Roosevelt, Chevilly Larue, Paris, FRANCE.</p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-envelope mr-3"></i>infos@renaissance.com</p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-phone mr-3"></i> 07 68 18 28 22</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row py-3 d-flex align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p class="text-center text-md-left grey-text">&copy; 2020 <a href="" target="_blank"> Rénaissance.com </a></p>
+                </div>
+                <div class="col-md-5 col-lg-4 ml-lg-0">
+                    <div class="social-section text-center text-md-left">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item mx-0"><a class="btn-floating btn-sm rgba-white-slight mr-xl-4" style="color:#ffffff!important;"><i class="fab fa-facebook-f"></i></a></li>
+                            <li class="list-inline-item mx-0"><a class="btn-floating btn-sm rgba-white-slight mr-xl-4" style="color:#ffffff!important;"><i class="fab fa-twitter"></i></a></li>
+                            <li class="list-inline-item mx-0"><a class="btn-floating btn-sm rgba-white-slight mr-xl-4" style="color:#ffffff!important;"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="{% static 'renaissance/js/jquery-3.4.0.min.js' %}"></script>
+    <script type="text/javascript">
+     $(function() {
+        var selectedClass = "";
+        $(".filter").click(function(){
+        selectedClass = $(this).attr("data-rel");
+        $("#gallery").fadeTo(100, 0.1);
+        $("#gallery div").not("."+selectedClass).fadeOut().removeClass('animation');
+        setTimeout(function() {
+        $("."+selectedClass).fadeIn().addClass('animation');
+        $("#gallery").fadeTo(300, 1);
+        }, 300);
+        });
+     });
+    </script>
+    <script type="text/javascript" src="{% static 'renaissance/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'renaissance/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'renaissance/js/mdb.min.js' %}"></script>
+</body>
+
+</html>

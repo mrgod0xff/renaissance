@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+{{ titl }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block head_extra %} 
+{{ form.media }}
+
+{% endblock head_extra %}
+
+
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% include 'nav.html' %}
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+            <!-- Content -->
+            <div class="col-lg-8">
+                <section class="section pt-4">
+                    <div class="row pt-1">
+                        <div class="col-lg-12">
+                            <section class="section my-5">
+                                <h3 class=" text-center font-weight-bold">{{ mess }}</h3>
+
+                                <hr/>
+
+                                <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+                                {{ form|crispy }}
+                                <input type='submit' class='btn btn-default' style="background-color: #123549 !important;" value='Poster une question' />
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--Sidebar-->
+            <div class="col-lg-4 col-12 pt-4 my-5">
+                <!--Card-->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header text-center"><strong>Les règles à respecter</strong></div>
+                    <!--Card content-->
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span> - Rédiger les messages dans un langage clair sans abréviations.</span>
+                            </li>
+                            <li>
+                                <span> - Faire usage de formule de politesse et échanger avec courtoisie.</span>
+                            </li>
+
+                            <li>
+                                <span> - Réserver un accueil cordial aux nouveaux utilisateurs.</span>
+                            </li>
+                             <li>
+                                <span> - Poster son message dans le thème le plus approprié.</span>
+                            </li>
+                             <li>
+                                <span> - Respecter la législation en vigueur.</span>
+                            </li>
+                        </ul>
+                        <p class="text-danger"><i class="fas fa-ban"></i> <em>Attention, toutes publications ne respectant pas l'une des règles ci-dessus sera immédiatement supprimer</em></p>
+                    </div>
+                </div>
+                <!--/.Card-->
+            </div>
+            <!--Sidebar-->
+        </div>
+
+</div>
+
+{% endblock content %}

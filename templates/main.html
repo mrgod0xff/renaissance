@@ -1,0 +1,259 @@
+{% load static %}
+<script src="{% static 'renaissance/js/slider.min.js' %}" type="text/javascript"></script>
+{% include 'slider.html' %}
+<header>
+    {% include 'nav.html' %}
+    <div class="view jarallax" data-jarallax='{"speed": 0.2}' style="background-image: url({% static 'renaissance/img/back_img.jpeg' %}); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="mask rgba-black-light">
+            <div class="container h-100 d-flex justify-content-center align-items-center">
+                <div class="row pt-5 mt-3">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <h3 class="h1-reponsive white-text text-uppercase font-weight-bold mb-3 wow fadeInDown" data-wow-delay="0.3s">
+                                <strong>BIENVENUE SUR LE SITE OFFICIEL DE RÉNAISSANCE</strong>
+                            </h3>
+
+                            <hr class="hr-light mt-4 wow fadeInDown" data-wow-delay="0.4s">
+
+                            <h5 class="text-uppercase mb-4 white-text wow fadeInDown" data-wow-delay="0.4s">
+                                <strong>LA CÔTE D'IVOIRE, NOTRE BIEN COMMUN</strong>
+                            </h5>
+                            <a class="btn btn-outline-white wow fadeInDown" data-wow-delay="0.4s" href="{% url "adhesion:adherant" %}">Devenir membre</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+  <br><br>
+<main class="pt-3">
+<section>
+    <div class="container mt-5 pt-3">
+    <div class="row">
+
+    <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+    <section class="section classic-blog-listing">
+        <!--NOS VISION-->
+        {% for vis in vision %}
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <center>
+                    <div class="view overlay mb-3">
+                        <img src="{{ vis.image.url }}" class="img-fluid" alt="{{ vis.name }}">
+                        <a href="#!"><div class="mask rgba-white-slight"></div></a>
+                    </div>
+                    </center>
+                    <a href="#" class=""><p class="text-center font-weight-bold gold-text mt-4">VISION</p></a>
+                    <h2 class="text-center font-weight-bold dark-grey-text pb-3"><strong>{{ vis.name }}</strong></h2>
+                    <p class="dark-grey-text">{{ vis.content }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!--AVANT TOUS et SURTOUT-->
+        {% for p in priorite %}
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <center>
+                <div class="view overlay mb-3">
+                    {% if p.image %}
+                    <img src="{{ p.image.url }}" class="img-fluid" alt="{{ p.name }}">
+                    {% endif %}
+                    <a href="#!"><div class="mask rgba-white-slight"></div></a>
+
+                </div>
+                </center>
+                <a href="#" class="cyan-text"><p class="text-center font-weight-bold gold-text mt-4">PRIORITE</p></a>
+                <h2 class="text-center font-weight-bold dark-grey-text pb-3"><strong>{{ p.name }}</strong></h2>
+                <p class="dark-grey-text">{{ p.content }}</p>
+                <div class="post-data mt-3 pt-3 grey-text"></div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!--NOS OBJECTIFS-->
+        {% for obj in objectif %}
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <center>
+                <div class="view overlay mb-3">
+                    <img src="{{ obj.image.url }}" class="img-fluid" alt="{{ obj.name }}">
+                    <a href="#!"><div class="mask rgba-white-slight"></div></a>
+                </div>
+                </center>
+                <a href="" class="cyan-text"><p class="text-center font-weight-bold gold-text mt-4">OBJECTIFS</p></a>
+                <h2 class="text-center font-weight-bold dark-grey-text pb-3" style="color: #123549 !important;"><strong>{{ obj.name }}</strong></h2>
+                <p class="dark-grey-text">{{ obj.content }}</p>
+                <div class="post-data mt-3 pt-3 grey-text"></div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!--NOS STRATEGIES-->
+        {% for stra in strategie %}
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <center>
+                <div class="view overlay mb-3">
+                    <img src="{{ stra.image.url }}" class="img-fluid" alt="{{ stra.name }}">
+                        <a href="#!"><div class="mask rgba-white-slight"></div></a>
+                </div>
+                </center>
+                <a href="#" class="cyan-text"><p class="text-center font-weight-bold gold-text mt-4" style="color: #123549 !important;">STRATEGIES</p></a>
+                <h2 class="text-center font-weight-bold dark-grey-text pb-3"><strong style="color: #123549 !important;">{{ stra.name }}</strong></h2>
+                <p class="dark-grey-text">{{ stra.content }}</p>
+                <div class="post-data mt-3 pt-3 grey-text"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    </div>
+
+    <!--Sidebar-->
+    <div class="col-lg-3 col-12 mt-1">
+        <!--Card Biographie du president-->
+        {% for infos in bio %}
+        <div class="card blue-grey lighten-5">
+            <div class="flex-center mt-4" style="padding: 4px !important">
+                <img src="{{ infos.image.url }}" class="img-fluid img-author z-depth-1" alt="">
+                <a><div class="mask rgba-white-slight"></div></a>
+            </div>
+            
+            <div class="card-body">
+                <h5 class="card-title dark-grey-text text-center grey lighten-4 py-2"><strong>Mr {{ infos.name}}</strong></h5>
+                <p class="mt-3 dark-grey-text font-small text-center"><em>{{ infos.content }}</em></p>
+            </div>
+        </div>
+        {% endfor %}
+        <!--/.Card Biographie du president-->
+
+        <!-- Section: articles recents -->
+        <section class="section widget-content mt-5 my-5">
+            <div class="card blue-grey lighten-5 card-body pb-0">
+                <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                    <strong>ACTUALITÉS RÉCENTES</strong>
+                </p>               
+                <div class="single-post">
+                    {% for actu in actus %}
+                    <div class="row mb-4">
+                        <div class="col-5">
+                            <div class="view overlay">
+                                {% if actu.image %}
+                                <img src="{{ actu.image.url }}" class="img-fluid z-depth-1 rounded-0" alt="sample image">
+                                {% else %}
+                                    {% load static %}
+                                    <img src="{% static 'renaissance/img/earth-globe.jpg' %}" class="img-fluid rounded-bottom" alt="image manque">
+                                {% endif %}
+                                <a><div class="mask rgba-white-slight"></div></a>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <h6 class="mt-0 font-small"><a style="text-decoration:none; cursor: pointer;color:#123549" href=""><strong>{{ actu.titre }}</strong></a></h6>
+                            <div class="post-data">
+                                <p class="font-small grey-text mb-0">
+                                    <i class="fa fa-clock-o"></i>
+                                    {{ actu.genre }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!--/ Section: articles recents -->
+
+        <!--News Events-->
+        <section class="section widget-content mt-5 my-5">
+            <div class="card blue-grey lighten-5 card-body pb-0">
+                <div class="single-post">
+                    <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                        <strong>&nbsp;EVÈNEMENTS AVENIR&nbsp;</strong>
+                    </p>
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <!--Carousel Wrapper-->
+                            <div id="carousel-example-4" class="carousel slide carousel-fade z-depth-1-half" data-ride="carousel">
+                                <!--Indicators-->
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carousel-example-4" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carousel-example-4" data-slide-to="1"></li>
+                                    <li data-target="#carousel-example-4" data-slide-to="2"></li>
+                                </ol>
+                                <!--Indicators-->
+
+                                <!--Slides-->
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item active">
+                                        <center>
+                                        <div class="view">   
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIihTYA8KjPR7H37PAJUjND84xH8GXkK3tgJOzz4nByi8k2LB8" class="img-fluid" alt="">
+                                            <a href="#!"><div class="mask flex-center rgba-stylish-strong"></div></a>
+                                        </div>
+                                        </center>
+                                        <!--Caption-->
+                                        <div class="carousel-caption">
+                                            <div class="animated fadeInDown">
+                                                <h4 class="h4-responsive">
+                                                    <a href="#!" class="white-text font-weight-bold">Aucun évènements</a>
+                                                </h4>
+                                                <p><a href="#!" class="white-text">pour l'instant</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!--Caption-->
+                                    </div>
+                                </div>
+                                <!--Slides-->
+
+                                <!--Controls-->
+                                <a class="carousel-control-prev" href="#carousel-example-4" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-example-4" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                                <!--.Controls-->
+                            </div>
+                            <!--Carousel Wrapper-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--News events-->
+
+        <!--Titrologie-->
+        <section class="section widget-content mt-5 my-5">
+            <div class="card blue-grey lighten-5 card-body pb-0">
+                <div class="single-post">
+                    <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                        <strong>REVUE DE PRESSE</strong>
+                    </p>
+                    {% for titrol in titrologs %}
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="view overlay">
+                                <img src="{{ titrol.image.url }}" class="img-fluid z-depth-1 rounded-0" alt="{{ titrol.maison }}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h6 class="mt-0 font-small">
+                                <a><strong>{{ titrol.maison }} - N° {{ titrol.numero }}</strong></a>
+                            </h6>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!--Titrologie-->
+    </div>
+    <!--Sidebar-->
+    </div>
+    </div>
+</section>
+</main>

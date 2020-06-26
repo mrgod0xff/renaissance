@@ -1,0 +1,150 @@
+{% extends 'base.html' %} {% block content %} {% include 'nav.html' %}
+<main class="pt-4 mt-5">
+    <div class="container">
+        <!--Blog-->
+        <div class="row mt-5 pt-3">
+            <!--Main listing-->
+            <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <ol class="breadcrumb p-0 white font-weight-bold">
+                            <li class="breadcrumb-item"><a href="/">MDB Home Page</a></li>
+                            <li class="breadcrumb-item"><a href="/support/">Support Main Page</a></li>
+                            <li class="breadcrumb-item"><a href="/support/cat/general/">General Bootstrap questions</a></li>
+                        </ol>
+                        <hr>
+                        <strong>Topic:</strong>
+                        <span class="font-weight-normal"> Forum template </span>
+                    </div>
+                </div>
+
+                <div class="question-card card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header forum-card-img-30 d-flex justify-content-between">
+                        <p class="pt-2 mb-0">
+                            <img src="https://secure.gravatar.com/avatar/62c9c125499e280d7f96a75e939f3046?s=96&d=mm&r=g" alt="" class="rounded-circle mr-2">
+                            <strong><a href="https://mdbootstrap.com/profile/?id=35406" target="_blank">fredemagi</a></strong>
+                            <span class="badge blue mx-1">pro</span> asked 2 years ago
+                        </p>
+                        <div>
+                            <a href="#" type="button" class="btn btn-outline-dark-green btn-sm px-2 waves-effect show_login">
+                                <span class="value">1</span>
+                                <i class="far fa-thumbs-up ml-1"></i>
+                            </a>
+                            <a href="#" type="button" class="btn btn-outline-danger btn-sm px-2 waves-effect show_login">
+                                <span class="value">0</span>
+                                <i class="far fa-thumbs-down ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Card content-->
+                    <div class="card-body">Does mdboostrap support or supply any forum template like this support forum?
+                        <hr>
+                        <!-- Comments -->
+                        <div class="comment-card ml-5">
+                            <!-- Single comment -->
+                            <small class="comment-item text-muted">
+                                <p class="mb-2">
+                                <strong>
+                                    <a href="https://mdbootstrap.com/profile/?id=72880" target="_blank">myusername</a>
+                                </strong>
+                                commented 6 months ago</p>
+                                <p>My test comment is here </p>
+                            </small>
+                            <hr>
+
+
+                            <div class="form-group mb-0">
+                                <a href="#" class="btn btn-info btn-sm ml-0 comment-form-toggle show_login">Add comment</a>
+                            </div>
+                        </div>
+                        <!-- Comments -->
+                    </div>
+                </div>
+
+                <div class="question-card card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header forum-card-img-30 d-flex justify-content-between">
+                        <p class="pt-2 mb-0">
+                            <img src="https://secure.gravatar.com/avatar/4cf642822dc5caf650facd79b8f64a95?s=96&d=mm&r=g" alt="" class="rounded-circle mr-2">
+                            <strong><a href="https://mdbootstrap.com/profile/?id=35406" target="_blank">fredemagi</a></strong>
+                            <span class="badge blue mx-1">pro</span> asked 2 years ago
+                        </p>
+                        <div>
+                            <a href="#" type="button" class="btn btn-outline-dark-green btn-sm px-2 waves-effect show_login">
+                                <span class="value">1</span>
+                                <i class="far fa-thumbs-up ml-1"></i>
+                            </a>
+                            <a href="#" type="button" class="btn btn-outline-danger btn-sm px-2 waves-effect show_login">
+                                <span class="value">0</span>
+                                <i class="far fa-thumbs-down ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Card content-->
+                    <div class="card-body">Hi,no, we don't have any support template in our offer.
+                        <hr>
+                        <!-- Comments -->
+                        <div class="comment-card ml-5">
+                            <div class="form-group mb-0">
+                                <a href="#" class="btn btn-info btn-sm ml-0 comment-form-toggle show_login">Add comment</a>
+                            </div>
+                        </div>
+                        <!-- Comments -->
+                    </div>
+                </div>
+            </div>
+            <!--Main listing-->
+
+            <!--Sidebar-->
+            <div class="col-lg-3 col-12">
+                <!--Card-->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header">Status</div>
+                    <!--Card content-->
+                    <div class="card-body d-flex justify-content-between">
+                        <p class="mb-0 pt-2">
+                            <i class="fas fa-lock grey-text mr-2"></i>Closed
+                        </p>
+                    </div>
+                </div>
+                <!--/.Card-->
+                <!--Card-->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header">Specification of the issue</div>
+                    <!--Card content-->
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <strong>User</strong>:
+                                <span>Pro</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/.Card-->
+                <!--Card: User-->
+                <div class="card forum-card-img-64 text-center mb-4">
+                    <!-- Card header -->
+                    <div class="card-header">About author</div>
+                    <!--Avatar-->
+                    <div class="mt-4">
+                        <img src="https://secure.gravatar.com/avatar/62c9c125499e280d7f96a75e939f3046?s=96&d=mm&r=g" alt="" class="rounded-circle mr-2">
+                    </div>
+                    <div class="card-body">
+                        <!--Name-->
+                        <h5 class="card-title font-weight-bold">
+                            <a href="/profile/?id=35406">fredemagi</a>
+                        </h5>
+                    </div>
+                </div>
+                <!--/.Card: User-->
+            </div>
+            <!--Sidebar-->
+        </div>
+        <!--Blog-->
+    </div>
+</main>
+{% endblock content %}

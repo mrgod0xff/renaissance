@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+  {{ article_titre }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% include 'nav.html' %}
+    <div class="container">
+<!--Blog section-->
+<section>
+    <div class="container-fluid white">
+        <hr class="mb-5 mt-0">
+        <div class="container">
+            <!--Section: Blog v.3-->
+            <section class="section extra-margins mt-5 py-5 text-center text-lg-left">
+                <div class="row my-xl-5 py-xl-4">
+                    <div class="col-sm-12 col-md-5 col-xl-5 mb-4" style="width: 490px!important;height: 672px!important;height: auto!important;margin: 3px!important;padding: 3px!important;">
+                        <div class="view overlay">
+                            {% if thumbnail %}
+                                <img src="{{ thumbnail.url }}" style="max-width: 100%!important; height: auto!important;" class="img-fluid z-depth-1" alt="{{ article_titre }}">
+                            {% else %}
+                                {% load static %}
+                                <img src="{% static 'renaissance/img/earth-globe.jpg' %}" class="img-fluid rounded-bottom" alt="{{ article_titre }}">
+                            {% endif %}
+                            <div class="mask rgba-white-slight"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+                        <h5 class="dark-grey-text text-lowercase pb-2 font-weight-bold">
+                            <strong>{{ type }}</strong>
+                        </h5>
+                        <p class="gold-text mb-4 text-uppercase font-weight-bold">{{ article_titre }}</p>
+                        <hr>
+                        <p class="dark-grey-text mt-4 text-justify">{{ content|linebreaks }}</p>
+                        <h5 class="text-right font-weight-bold dark-grey-text mt-5">
+                            <em>Admin</em>
+                        </h5>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!--Blog section-->
+
+<hr class="mt-1">
+
+<!--Comments-->
+<section>
+    <div class="comments-list text-center text-md-left">
+        <div class="text-center my-4">
+          {% with comments.count as total_comments %}
+            <h3 class="font-weight-bold">Commentaires
+                <span class="badge badge-danger ml-2">{{ total_comments }}</span>
+            </h3>
+          {% endwith %}
+        </div>
+        {% for comment in comments %}
+            <div class="row mb-1">
+                <div class="col-sm-10 col-12">
+                    <a>
+                        <h5 class="user-name font-weight-bold">
+                            {{ comment.nom }}
+                        </h5>
+                    </a>
+                    <div class="card-data">
+                        <ul class="list-unstyled">
+                            <li class="comment-date font-small">
+                                <i class="far fa-clock-o"></i>
+                                {{ comment.created_on }}
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="dark-grey-text article">
+                        {{ comment.message | linebreaks }}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+<hr class="mt-1">
+    <section class="mb-4 wow fadeIn" data-wow-delay="0.2s">
+       {% if new_comment %}
+          <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Félicitation !</h4>
+                <p>Votre avis a été enregistré avec succès.</p>
+                <hr>
+            <p class="mb-0">Il a été soumis à validation et affichera bientôt dans les commentaires de ce poste.<br> Merci pour votre attention</p>
+          </div>
+        {% else %}
+            <h3 class="font-weight-bold text-center my-5">Laisser un Commentaire</h3>
+            <div class="container p-5">
+                <em>Votre adresse email ne sera pas publiée. Les champs obligatoires sont marqués*</em>
+                <form method="post" style="margin-top: 1.3em;">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary  btn-lg" style="background: #123549 !important;">Poster un commentaire</button>
+                </form>
+            </div>
+        {% endif %}
+    </section>
+</div>
+        <section>
+            <div class="container-fluid grey lighten-3 mb-0 pb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12">
+                            <h6 class="font-weight-bold mt-5 mb-3 text-uppercase">évènements</h6>
+                            <hr class="mb-5">
+                            {% load static %}
+                            <img src="{% static 'renaissance/img/logo.jpeg' %}" alt="sample image" class="img-fluid z-depth-1">
+                            <p class="mt-4 mb-5 text-justify text-center text-uppercase">message</p>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <h6 class="font-weight-bold mt-5 mb-3 text-uppercase">DERNIÈRES NOUVELLES</h6>
+                            <hr class="mb-5">
+                            {% for ln in l_new %}
+                             {% if forloop.first %}
+                                <div class="row mt-4">
+                              {% else %}
+                                <div class="row">
+                              {% endif %}
+                                <div class="col-4">
+                                    <div class="view overlay z-depth-1 mb-3">
+                                        {% if ln.image %}
+                                        <img src="{{ ln.image.url }}" class="img-fluid" alt="Post">
+                                       {% else %}
+                                            {% load static %}
+                                            <img src="{% static 'renaissance/img/earth-globe.jpg' %}" class="img-fluid rounded-bottom" alt="image manque">
+                                        <a>
+                                            <div class="mask rgba-white-slight"></div>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-8 mb-1">
+                                    <div class="">
+                                        <p class="mb-1">
+                                            <a href="#!" class="text-hover font-weight-bold" style="color: #123549 !important;">{{ ln.titre|slice:50 }} ...</a>
+                                        </p>
+                                        <p class="font-small grey-text">
+                                            <em>{{ ln.created_on|date:"M d, Y" }}</em>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            <h6 class="font-weight-bold mt-5 mb-3 text-uppercase"> d'autres ARTICLES</h6>
+                            <hr class="mb-5">
+                            {% for l in last %}
+                              {% if forloop.first %}
+                                <div class="row mt-4">
+                              {% else %}
+                                <div class="row">
+                              {% endif %}
+                                <div class="col-4">
+                                    <div class="view overlay z-depth-1 mb-3">
+                                        {% if l.image %}
+                                            <img src="{{ l.image.url }}" class="img-fluid" alt="Post">
+                                        {% else %}
+                                            {% load static %}
+                                            <img src="{% static 'renaissance/img/earth-globe.jpg' %}" class="img-fluid rounded-bottom" alt="image manque">
+                                        {% endif %}
+                                        <a>
+                                            <div class="mask rgba-white-slight"></div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-8 mb-1">
+                                    <div class="">
+                                        <p class="mb-1">
+                                            <a href="#!" class="text-hover font-weight-bold" style="color: #123549 !important;">{{ l.titre|slice:50 }} ...</a>
+                                        </p>
+                                        <p class="font-small grey-text">
+                                            <em>{{ l.created_on|date:"M d, Y" }}</em>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <!--Grid row-->
+
+                </div>
+            </div>
+        </section>
+        <!--/Latest posts-->
+{% endblock %}

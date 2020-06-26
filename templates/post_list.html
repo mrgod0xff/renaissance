@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+{{ title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}  
+{% include 'nav.html' %}
+<main>
+<!-- Main Container -->
+<div class="container mt-2 pt-2">
+    <nav class="navbar navbar-expand-lg navbar-dark  mt-5" style="background-color: #123549 !important;">
+        <a class="font-weight-bold white-text mr-4" href="{% url "posts:list" %}">Accueil Forum</a>
+        {% block post_detail_link %}
+        {% endblock %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                    <ul class="navbar-nav mr-auto">
+                        <div class="modal fade" id="orangeModalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-notify modal-warning" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center" style="background: #123549 !important">
+                                        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Viellez choisir l'action à éffectuer</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="white-text">&times;</span>
+                                    </button>
+                                </div>
+        
+
+                                <!--Footer-->
+                                <div class="modal-footer justify-content-center">
+                                    <a type="button" href="{% url 'posts:registration' %}" class="btn btn-success">Je m'inscris <i class="far fa-gem ml-1 text-white"></i></a>
+                                    <a type="button" href="{% url 'posts:authentification' %}" class="btn btn-outline-grey waves-effect" style="color: #123549 !important">Je me connecte <i class="fas fa-paper-plane-o ml-1"></i></a>
+                                </div>
+                                </div>
+                                <!--/.Content-->
+                            </div>
+                        </div>
+                        <li class="nav-item">
+                            {% if check_user.is_authenticated %}
+                                <a href="{% url 'posts:create' %}" class="nav-link border border-light rounded waves-effect mr-2">
+                            {% else %}
+                                <a data-toggle="modal" data-target="#orangeModalSubscription" class="nav-link border border-light rounded waves-effect mr-2">
+                            {% endif %}
+                                <i class="fas fa-pencil-alt mr-1"></i>Posez votre question
+                            </a>
+                        </li>
+                        </ul>
+                        <!-- Links -->
+
+                        <!-- Search form -->
+                        <form class="search-form" role="search">
+                            <div class="form-group md-form my-0 waves-light">
+                                <input type="text" class="form-control" placeholder="Rechercher" name='q' value='{{ request.GET.q }}'>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+        <div class="row">
+            <!-- Content -->
+            <div class="col-lg-8">
+                <section class="section pt-4">
+                    <div class="row pt-1">
+                        <div class="col-lg-12">
+                            {% if check_user.is_authenticated %}
+                            <h4 class="text-center">Connecter en tant que : <strong class="text-uppercase font-weight-bold">{{ user }}</strong></h4>
+                            {% else %}
+                            <h4 class="text-center">Vous n'êtes pas connecté, mais vous pouvez lire toute nos questions</h4>
+                            {% endif %}
+                            <section class="section my-5">
+                             {% if object_list|length_is:"0" %}
+                                <h1>Désolé, il n'y a aucun sujet pour l'instant</h1>
+                            {% else %}
+                            {% for obj in object_list %}
+                                <div class="question-card card mb-4">
+                                    <!-- Card header -->
+                                    {% if obj.draft %}<h3>Staff only: Draft</h3>{% endif %} {% if obj.publish > today %}<h3>Staff Only: Future Post</h3>{% endif %}
+                                    <div class="card-header forum-card-img-30 d-flex justify-content-between">
+                                        <p class="pt-2 mb-0">
+                                            <img src="https://secure.gravatar.com/avatar/62c9c125499e280d7f96a75e939f3046?s=96&d=mm&r=g" alt="" class="rounded-circle mr-2">
+                                            {% if obj.user %}
+                                            <strong class="text-uppercase">
+                                                {{ obj.user }},
+                                            </strong>
+                                            {% endif %}
+                                            Publier le {{ obj.publish }}
+                                        </p>
+                                    </div>
+                                    <!--Card content-->
+                                    <div class="card-body text-center">
+                                     <a href="{{ obj.get_absolute_url }}" style="text-decoration:none; color:#123549 !important;font-weight:bold">{{ obj.title }}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% if paginate %}
+                                <!--Pagination dark-->
+                                <nav>
+                                    <ul class="pagination pg-dark justify-content-center">
+                                    <!--Arrow left-->
+                                    {% if object_list.has_previous %}
+                                        <li class="page-item">
+                                        <a class="page-link" aria-label="Previous" href="?page={{ object_list.previous_page_number }}">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        </li>
+                                    {% endif %}
+                                    <!--Numbers-->
+                                    {% for i in object_list.paginator.page_range %}
+                                        {% if object_list.number == i %}
+                                        <li class="page-item active">
+                                            <a class="page-link" style="background:#123549 !important">{{ i }}</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <!--Arrow right-->
+                                    {% if object_list.has_next %}
+                                        <li class="page-item">
+                                        <a class="page-link" aria-label="Next" href="?page={{ object_list.next_page_number }}">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                        </li>
+                                    {% endif %}
+                                    </ul>
+                                </nav>
+                                <!--/Pagination dark-->
+                                {% endif %}
+                                {% endif %}
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--Sidebar-->
+            <div class="col-lg-4 col-12 pt-4 my-5">
+                <!--Card-->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header text-center"><strong>Les règles à respecter</strong></div>
+                    <!--Card content-->
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span> - Rédiger les messages dans un langage clair sans abréviations.</span>
+                            </li>
+                            <li>
+                                <span> - Faire usage de formule de politesse et échanger avec courtoisie.</span>
+                            </li>
+
+                            <li>
+                                <span> - Réserver un accueil cordial aux nouveaux utilisateurs.</span>
+                            </li>
+                             <li>
+                                <span> - Poster son message dans le thème le plus approprié.</span>
+                            </li>
+                             <li>
+                                <span> - Respecter la législation en vigueur.</span>
+                            </li>
+                        </ul>
+                        <p class="text-danger"><i class="fas fa-ban"></i> <em>Attention, toutes publications ne respectant pas l'une des règles ci-dessus sera immédiatement supprimer</em></p>
+                    </div>
+                </div>
+                <!--/.Card-->
+            </div>
+            <!--Sidebar-->
+        </div>
+    </div>
+</main>
+<br>
+<br>
+<br>
+{% endblock %}
+

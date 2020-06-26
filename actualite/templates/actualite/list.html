@@ -1,0 +1,248 @@
+{% include 'nav.html' %}
+<br><br>
+  <!-- Main layout -->
+  <main>
+    <div class="container-fluid">
+      <!-- Magazine -->
+      <div class="row mt-5">
+        <!-- Main newsfeed -->
+        <div class="col-xl-8 col-lg-8 col-md-12">
+        <!--Section: Magazine posts-->
+          <section class="section extra-margins listing-section">
+            <h5 class="font-weight-bold"><strong>DERNIÈRES NOUVELLES</strong></h5>
+            <hr class="red title-hr" style="background:#123549!important">
+
+            <!--Carousel Wrapper-->
+            <div id="carousel-example-2" class="carousel slide my-4 z-depth-1" data-ride="carousel">
+              <!--Indicators-->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-2" data-slide-to="1"></li>
+                <li data-target="#carousel-example-2" data-slide-to="2"></li>
+              </ol>
+              <!--/.Indicators-->
+              <!--Slides-->
+              <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                  <div class="view">
+                    <img class="d-block w-100 rounded" src="http://www.linfodrome.com/media/k2/items/cache/1f3fb3f82022b55c1de6cca51f869f2c_L.jpg"
+                      alt="First slide">
+                    <div class="mask rgba-black-light"></div>
+                  </div>
+                  <div class="carousel-caption">
+                    <h6 class="h6-responsive font-weight-bold">Journées politiques du Pdci : Le pari de la mobilisation réussie</h6>
+                  </div>
+                </div>
+              <div class="carousel-item">
+                  <!--Mask color-->
+                <div class="view">
+                    <img class="d-block w-100 rounded" src="http://www.linfodrome.com/media/k2/items/cache/7402d787bd0bf5151148d9f0ee5318d2_L.jpg"
+                      alt="Second slide">
+                    <div class="mask rgba-black-light"></div>
+                  </div>
+                  <div class="carousel-caption">
+                    <h6 class="h6-responsive font-weight-bold">Guillaume Soro annonce son retour en Côte d'Ivoire pour la semaine prochaine et craint pour la stabilité du pays</h6>
+                  </div>
+                </div>
+              <div class="carousel-item">
+                  <!--Mask color-->
+                <div class="view rgba-black-slight">
+                    <img class="d-block w-100 rounded" src="http://www.linfodrome.com/media/k2/items/cache/ff922efc378d3c92c3da204fe68be8fb_L.jpg"
+                      alt="Third slide">
+                    <div class="mask rgba-black-light"></div>
+                  </div>
+                  <div class="carousel-caption">
+                    <h6 class="h6-responsive font-weight-bold">Affaire ''taupes de Soro au Rhdp'': Ouattara confie une mission urgente à ''Photocopie'', ce qui se prépare contre des cadres du Rhdp</h6>
+                  </div>
+                </div>
+              </div>
+              <!--/.Slides-->
+              <!--Controls-->
+              <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+                <i class="fas fa-chevron-left"></i>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+                <i class="fas fa-chevron-right"></i>
+                <span class="sr-only">Next</span>
+              </a>
+              <!--/.Controls-->
+            </div>
+            <!--/.Carousel Wrapper-->
+
+          
+
+          <!-- Section: News -->
+          <section>
+            <h5 class="dark-grey-text text-uppercase font-weight-bold">
+              <strong>{{ list_title }}</strong>
+            </h5>
+            <hr style="background:#123549 !important">
+          {% if articles|length_is:"0" %}
+            <h1>coucou</h1>
+          {% else %}
+            <!-- Grid row -->
+            <div class="row">
+              {% for product in articles %}
+                <!-- Grid column -->
+                <div class="col-md-12 mb-4">
+                  <!--News card-->
+                  <div class="card  mb-3 text-center hoverable">
+                    <div class="card-body">
+                      <!--Grid row-->
+                      <div class="row">
+                        <!--Grid column-->
+                        <div class="col-md-5 mx-3 my-3">
+                          <!--Featured image-->
+                          
+                          <div class="view overlay rgba-white-slight">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="img-fluid rounded-bottom" alt="{{ product.titre }}">
+                              {% else %}
+                                {% load static %}
+                                <img src="{% static 'renaissance/img/earth-globe.jpg' %}" class="img-fluid rounded-bottom" alt="{{ product.titre }}">
+                            {% endif %}
+                            <a>
+                              <div class="mask"></div>
+                            </a>
+                          </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-6 text-left ml-xl-3 ml-lg-0 ml-md-3 mt-3">
+                          <h6 class="mb-4">
+                            <strong style="color:#123549 !important">{{ product.titre }}</strong>
+                          </h6>
+                          <p class="dark-grey-text" style="text-align: justify;text-justify: inherit;">{{ product.content|slice:"0:150" }}...</p>
+                          <p><a><strong style="color:#123549 !important">{{ product.genre }}</strong></a></p>
+                          <a class="btn btn-indigo btn-sm" style="background:#123549 !important" href="{% url 'actualite:detail' article_id=product.id %}">Voir</a>
+                        </div>
+                        <!--Grid column-->
+                      </div>
+                      <!--Grid row-->
+                    </div>
+                  </div>
+                  <!--News card-->
+                </div>
+                <!-- Grid column -->
+              {% endfor %}
+            </div>
+            <!-- Grid row -->
+            {% if paginate %}
+              <!--Pagination dark-->
+              <nav>
+                <ul class="pagination pg-dark justify-content-center">
+                  <!--Arrow left-->
+                  {% if articles.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" aria-label="Previous" href="?page={{ articles.previous_page_number }}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  <!--Numbers-->
+                  {% for i in articles.paginator.page_range %}
+                    {% if articles.number == i %}
+                      <li class="page-item active">
+                        <a class="page-link" style="background:#123549 !important">{{ i }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+
+                  <!--Arrow right-->
+                  {% if articles.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" aria-label="Next" href="?page={{ articles.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+              <!--/Pagination dark-->
+            {% endif %}
+          {% endif %}
+          </section>
+          <!-- Section: News -->
+        </div>
+        <!-- Main newsfeed -->
+
+        <!-- Sidebar -->
+        <div class="col-xl-4 col-lg-4 col-md-12 mt-0 mb-2">
+            <section class="section">
+                <h5 class="dark-grey-text font-weight-bold">
+                    <strong>CATÉGORIES</strong>
+                </h5>
+                <hr style="background:#123549 !important">
+                <ul class="list-group z-depth-1">
+                    {% for cat in category %}
+                    <li class="list-group-item d-flex text-lowercase justify-content-between align-items-center">
+                    <a>{{ cat.name }}</a>
+                    <span class="badge indigo badge-pill" style="background:#123549 !important">4</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <!--News Events-->
+            <section class="section widget-content mt-5 my-5">
+                <div class="card blue-grey lighten-5 card-body pb-0">
+                    <div class="single-post">
+                        <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                            <strong>&nbsp;Bulletin d'information&nbsp;</strong>
+                        </p>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--News events-->
+
+          <h4 class="font-weight-bold"><strong>REVUE DE PRESSE</strong></h4>
+          <hr class="red title-hr mb-4"  style="background:#123549!important">
+          <section class="section mt-5">
+              <div class="row">
+                <div class="col-md-10 col-lg-12 mx-auto">
+                  <div id="carousel-example-2" class="carousel slide carousel-fade carousel-img" data-ride="carousel">
+                    <!--Slides-->
+                    <div class="carousel-inner" role="listbox">
+                      {% for journal in revue %}
+                        {% if forloop.first %}
+                        <div class="carousel-item active">
+                         {% else %}
+                        <div class="carousel-item">
+                          {% endif %}
+                          <div class="view">
+                            {% if journal.image %}
+                              <img class="d-block w-100" src="{{ journal.image.url }}" alt="{{ journal.maison }}">
+                            {% endif %}
+                            <div class="mask rgba-black-light"></div>
+                          </div>
+                          <div class="carousel-caption">
+                            <h3 class="h3-responsive font-weight-bold">{{ journal.maison }}</h3>
+                            <p>N° {{ journal.numero }}</p>
+                          </div>
+                        </div>  
+                      {% endfor %} 
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </section>
+        </div>
+        <!-- Sidebar -->
+      </div>
+      <!-- Magazine -->
+    </div>
+  </main>
+  <!-- Main layout -->

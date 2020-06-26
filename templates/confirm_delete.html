@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+{{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+
+
+{% block content %}
+{% include 'nav.html' %}
+
+<main>
+    <div class="container my-5 py-5 z-depth-1 p-2">
+
+ 
+    <!--Section: Content-->
+    <section class="text-center px-md-5 mx-md-5 dark-grey-text">
+
+      <h3 class="font-weight-bold">Confirmation de la suppression </h3>
+        
+      
+            <form method="POST" action="."> {% csrf_token %}
+                <p>Etes-vous sûr de vouloir supprimer cette réponse: " <strong>{{ object.content }}</strong> "?</p>
+              
+                <input type='submit' value='OUI' class='btn btn-success'>
+                <a href='{{ object.get_absolute_url }}' class='btn btn-danger'>NON</a>
+            </form>
+
+
+    </section>
+    <!--Section: Content-->
+
+
+  </div>
+</main>
+{% endblock content %}

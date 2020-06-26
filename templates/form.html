@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+{% include 'nav.html' %}
+<br>
+<br>
+<br>
+  <div class="container my-5 py-5 z-depth-1">
+
+ 
+    <!--Section: Content-->
+    <section class=" px-md-5 mx-md-5 dark-grey-text">
+
+      <h3 class=" text-center font-weight-bold">{{ title }}</h3>
+
+      <hr/>
+
+<form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+{{ form|crispy }}
+<input type='submit' style="background-color: #123549 !important;" class='btn btn-default' value='{{ title }}' />
+</form>
+
+    </section>
+    <!--Section: Content-->
+
+
+  </div>
+{% endblock content %}

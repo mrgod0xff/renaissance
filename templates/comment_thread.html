@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+{{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+
+
+{% block content %}
+{{ object }}
+
+{% include 'nav.html' %}
+<br>
+<main class="">
+    <div class="container">
+         <nav class="navbar navbar-expand-lg navbar-dark  mt-5" style="background-color: #123549 !important;">
+        <a class="font-weight-bold white-text mr-4" href="{% url "posts:list" %}">Accueil Form</a>
+        
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                    <ul class="navbar-nav mr-auto">
+                        <div class="modal fade" id="orangeModalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-notify modal-warning" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center" style="background: #123549 !important">
+                                        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Verification</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="white-text">&times;</span>
+                                    </button>
+                                </div>
+
+                                <!--Body-->
+                                <div class="modal-body">
+                                    <div class="md-form">
+                                        <p>
+                                            Viellez choisir l'action à éffectuer !
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!--Footer-->
+                                <div class="modal-footer justify-content-center">
+                                    <a type="button" href="{% url 'posts:registration' %}" class="btn btn-success">Je m'inscris <i class="far fa-gem ml-1 text-white"></i></a>
+                                    <a type="button" href="{% url 'posts:authentification' %}" class="btn btn-outline-grey waves-effect" style="color: #123549 !important">Je me connecte <i class="fas fa-paper-plane-o ml-1"></i></a>
+                                </div>
+                                </div>
+                                <!--/.Content-->
+                            </div>
+                        </div>
+                        </ul>
+                        <!-- Links -->
+
+                        <!-- Search form -->
+                        <form class="search-form" role="search">
+                            <div class="form-group md-form my-0 waves-light">
+                                <input type="text" class="form-control" placeholder="Rechercher">
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+        <div class="row">
+            <!-- Content -->
+            <div class="col-lg-8">
+                <section class="section pt-4">
+                    <div class="row pt-1">
+                        <div class="col-lg-12">
+                            <section class="section my-5">
+                                <blockquote class="note note-light">
+                                    <p>{{ comment.content }}</p>
+                                    <footer>Répondu par {{ comment.user }} -- il y a {{ comment.timestamp|timesince }}  | {% if comment.children.count > 0 %}{{ comment.children.count }} Réponse{% if comment.children.count > 1 %}s{% endif %} {% endif %} {% if request.user == comment.user %}<a href='{{ comment.get_delete_url }}'> | Supprimer</a> {% endif %}</footer>
+                                </blockquote>
+                                <hr/>
+                                <div class="p-3">
+                                    {% for child_comment in comment.children %}
+                                    <blockquote class="note note-info">
+                                        <p>{{ child_comment.content }}</p>
+                                        <footer>Répondu par {{ child_comment.user }} -- il y a {{ child_comment.timestamp|timesince }}  | {% if request.user == child_comment.user %}<a href='{{ child_comment.get_delete_url }}'> Supprimer</a>{% endif %}</footer>
+                                    </blockquote>
+                                    {% endfor %}
+                                    {% if request.user.is_authenticated %}
+                                    <form method="POST" action="."> {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                                        <input type='submit' style="background: #123549 !important;" value='Répondre' class='btn btn-default'>
+                                    </form>
+                                    {% else %}
+                                    <p>Vous devez être connecté pour répondre à ce commentaire </p>
+                                    {% endif %}
+                                </div>
+                                <hr/>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--Sidebar-->
+            <div class="col-lg-4 col-12 pt-4 my-5">
+                <!--Card-->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header text-center"><strong>Les règles à respecter</strong></div>
+                    <!--Card content-->
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span> - Rédiger les messages dans un langage clair sans abréviations.</span>
+                            </li>
+                            <li>
+                                <span> - Faire usage de formule de politesse et échanger avec courtoisie.</span>
+                            </li>
+
+                            <li>
+                                <span> - Réserver un accueil cordial aux nouveaux utilisateurs.</span>
+                            </li>
+                             <li>
+                                <span> - Poster son message dans le thème le plus approprié.</span>
+                            </li>
+                             <li>
+                                <span> - Respecter la législation en vigueur.</span>
+                            </li>
+                        </ul>
+                        <p class="text-danger"><i class="fas fa-ban"></i> <em>Attention, toutes publications ne respectant pas l'une des règles ci-dessus sera immédiatement supprimer</em></p>
+                    </div>
+                </div>
+                <!--/.Card-->
+            </div>
+            <!--Sidebar-->
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

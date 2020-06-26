@@ -1,0 +1,183 @@
+{% extends 'base.html' %} 
+
+{% load urlify %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+{{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %} 
+{% include 'nav.html' %}
+<main class="pt-4 mt-5">
+    <div class="container">
+     <nav class="navbar navbar-expand-lg navbar-dark  mt-5" style="background-color: #123549 !important;">
+        <a class="font-weight-bold white-text mr-4" href="{% url "posts:list" %}">Accueil Forum</a>
+        
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                    <ul class="navbar-nav mr-auto">
+                        <div class="modal fade" id="orangeModalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-notify modal-warning" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center" style="background: #123549 !important">
+                                        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Verification</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="white-text">&times;</span>
+                                    </button>
+                                </div>
+
+                                <!--Body-->
+                                <div class="modal-body">
+                                    <div class="md-form">
+                                        <p>
+                                            Viellez choisir l'action à éffectuer !
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!--Footer-->
+                                <div class="modal-footer justify-content-center">
+                                    <a type="button" href="{% url 'posts:registration' %}" class="btn btn-success">Je m'inscris <i class="far fa-gem ml-1 text-white"></i></a>
+                                    <a type="button" href="{% url 'posts:authentification' %}" class="btn btn-outline-grey waves-effect" style="color: #123549 !important">Je me connecte <i class="fas fa-paper-plane-o ml-1"></i></a>
+                                </div>
+                                </div>
+                                <!--/.Content-->
+                            </div>
+                        </div>
+                        </ul>
+                        <!-- Links -->
+
+                        <!-- Search form 
+                        <form class="search-form" role="search">
+                            <div class="form-group md-form my-0 waves-light">
+                                <input type="text" class="form-control" placeholder="Rechercher">
+                            </div>
+                        </form>-->
+                    </div>
+                </nav>
+        <!--Blog-->
+        <div class="row mt-5 pt-3">
+            <!--Main listing-->
+            <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <strong>Sujet:</strong>
+                        <span class="font-weight-normal text-warning"> {{ title }} </span>
+                    </div>
+                </div>
+
+                <div class="question-card card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header forum-card-img-30 d-flex justify-content-between">
+                        <p class="pt-2 mb-0">
+                            <img src="https://secure.gravatar.com/avatar/62c9c125499e280d7f96a75e939f3046?s=96&d=mm&r=g" alt="" class="rounded-circle mr-2">
+                            {% if instance.user %}
+                            <strong class="text-uppercase">
+                                {{ instance.user }}
+                            </strong>,
+                             Publier le {{ instance.publish }}
+                            {% endif %}
+                        </p>
+                        {% if instance.user == current_user or instance.user.is_authenticated == current_user %}
+                            <div>
+                                <a href="edit/" type="button" class="btn btn-outline-dark-green btn-sm px-2 waves-effect show_login">
+                                    <span class="value"><i class="fas fa-pen-alt"></i></span>
+                                </a>
+                                <a href="delete/" type="button" class="btn btn-outline-danger btn-sm px-2 waves-effect show_login">
+                                    <span class="value"><i class="far fa-trash-alt"></i></span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!--Card content-->
+                    <div class="card-body">
+                    {{ instance.get_markdown|linebreaks }}
+                        <hr>
+                        <!-- Comments -->
+                        <div class="comment-card ml-5">
+                            <!-- Single comment -->
+                            {% for comment in comments %}
+                            
+                            <small class="comment-item text-muted ">
+                                <blockquote class="note note-light">
+                                <p class="mb-2">Commenté par <strong><a class="text-uppercase" style="text-decoration:none">{{ comment.user }}</a></strong>
+                                 il y a {{ comment.timestamp|timesince }} | {% if comment.children.count > 0 %}{{ comment.children.count }} Réponse{% if comment.children.count > 1 %}s{% endif %} {% endif %} <a class='comment-reply-btn' href='#'></a><a class='' href='{{ comment.get_absolute_url }}'>Voir toutes les réponses à ce commentaire</a></p>
+                                <p>{{ comment.content|linebreaks }}</p>
+                                </blockquote>
+                                <div class='comment-reply p-2'>
+                                    {% for child_comment in comment.children %}
+                                        <blockquote class="note note-info">
+                                            <p style="color:cornflowerblue ;" >{{ child_comment.content|linebreaks }}</p>
+                                            <footer> --> Répondu par <b class="text-uppercase">{{ child_comment.user }}</b> -- il y a {{ child_comment.timestamp|timesince }}</footer>
+                                        </blockquote>
+                                    {% endfor %}
+                                </div>
+                            </small>
+                            
+                            <hr>
+                            {% endfor %}
+
+                            <h5 class="text-warning text-justify" style="color:chocolate;">Postez votre réponse</h5>
+
+                            {% if request.user.is_authenticated %}
+                                <form method="POST" action="."> 
+                                    {% csrf_token %}
+                                    {{ comment_form|crispy }}
+                                    <input type='submit' style="background: #123549 !important;" value='Poster une réponse' class='btn btn-default'>
+                                </form>
+                            {% else %}
+                                <em>Vous devez vous connecter pour répondre <a href="{% url 'posts:authentification' %}">cliquez ici</a></em>
+                                <br>
+                                <em>si vous n'avez pas de compte <a href="{% url 'posts:registration' %}">cliquez ici</a></em>
+                            {% endif %}
+                            <hr>
+                        </div>
+                        <!-- Comments -->
+                    </div>
+                </div>
+            </div>
+            <!--Main listing-->
+
+            <!--Sidebar-->
+            <div class="col-lg-3 col-12">
+                <!--Card-->
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header">Statut</div>
+                    <!--Card content-->
+                    <div class="card-body d-flex justify-content-between">
+                       {% comment %}  <p class="mb-0 pt-2 text-danger">
+                            <i class="fas fa-lock mr-2"></i>Fermée
+                        </p> {% endcomment %}
+                        <p class="mb-0 pt-2 text-success">
+                            <i class="fas fa-check-circle"></i>Active
+                        </p>
+                    </div>
+                </div>
+                <!--/.Card-->
+                <!--Card: User-->
+                <div class="card forum-card-img-64 text-center mb-4">
+                    <!-- Card header -->
+                    <div class="card-header">À propos de l'auteur</div>
+                    <!--Avatar-->
+                    <div class="mt-4">
+                        <img src="https://secure.gravatar.com/avatar/62c9c125499e280d7f96a75e939f3046?s=96&d=mm&r=g" alt="" class="rounded-circle mr-2">
+                    </div>
+                    <div class="card-body">
+                        <!--Name-->
+                        {% if instance.user %}
+                        <h5 class="card-title font-weight-bold">
+                            <strong>{{ instance.user }}</strong>
+                        </h5>
+                        {% endif %}
+                    </div>
+                </div>
+                <!--/.Card: User-->
+            </div>
+            <!--Sidebar-->
+        </div>
+        <!--Blog-->
+    </div>
+</main>
+{% endblock content %}
