@@ -25,7 +25,7 @@ django-allauth==0.40.0
 django-bootstrap-datepicker-plus==3.0.5
 django-countries==5.5
 django-crispy-forms==1.7.2
-django-debug-toolbar==1.10.1
+django-debug-toolbar==1.11.1
 django-feedparser==0.2.1
 django-filter==2.3.0
 django-jet==1.0.8
