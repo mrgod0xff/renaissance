@@ -9,7 +9,7 @@ Babel==2.8.0
 boto==2.48.0
 boto3==1.4.7
 botocore==1.7.32
-certifi==2017.7.27.1
+certifi==2022.12.7
 cfe==0.0.15
 cffi==1.12.3
 chardet==3.0.4
